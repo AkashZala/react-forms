@@ -5,6 +5,7 @@ function Authenticate(props) {
 
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const [username, setUsername] = useState(null);
 
     const handleClick = async () => {
         try {
@@ -18,6 +19,7 @@ function Authenticate(props) {
                 })
             const result = await response.json();
             setSuccess(result.message)
+            setUsername(result.data.username.username)
         } catch (error) {
             setError(error.message)
         }
@@ -27,7 +29,9 @@ function Authenticate(props) {
         <>
             <h2>Authenticate!</h2>
             {error && <p>{error}</p>}
-            {success && <p>{success}</p>}
+            <p>{username && `User: ${username}`}</p>
+            <p>{success && ` Has Been ${success}`}</p>
+            
             <button onClick={handleClick}>
                 Authenticate Token
             </button>
