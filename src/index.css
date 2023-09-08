@@ -21,3 +21,6 @@ form {
 form > button {
   width: 100px
 }
+button {
+  margin: 2%;
+}

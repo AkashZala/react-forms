@@ -29,9 +29,8 @@ function Authenticate(props) {
         <>
             <h2>Authenticate!</h2>
             {error && <p>{error}</p>}
-            <p>{username && `User: ${username}`}</p>
-            <p>{success && ` Has Been ${success}`}</p>
-            
+            <p>{username !== undefined && username !== null ? `User: ${username}` : ""}</p>
+            <p>{success && `${success}`}</p>
             <button onClick={handleClick}>
                 Authenticate Token
             </button>

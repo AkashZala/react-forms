@@ -10,6 +10,24 @@ function SignUpForm(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        function validateForm() {
+            let unCheck = document.forms['signUp']['un'].value;
+            let pwCheck = document.forms['signUp']['pw'].value;
+            if (unCheck.length < 8) {
+                alert("Username must be at least 8 characters");
+                return false;
+            } else if (pwCheck.length < 8) {
+                alert("Password must be at least 8 characters")
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        validateForm();
+        // could also just disable button
+        // <button disabled={username.length < 8 || password.length < 8 ? true:false}>
+
         try {
             const response = await fetch('https://fsa-jwt-practice.herokuapp.com/signup',
                 {
@@ -20,8 +38,7 @@ function SignUpForm(props) {
                     body: JSON.stringify({
                         username: { username },
                         password: { password }
-                    }
-                    )
+                    })
                 })
             const result = await response.json();
             setToken(result.token)
@@ -34,10 +51,11 @@ function SignUpForm(props) {
         <>
             <h2>Sign Up!</h2>
             {error && <p>{error}</p>}
-            <form onSubmit={ handleSubmit }>
+            <form name='signUp' onSubmit={handleSubmit}>
                 <label>
                     Username: {" "}
                     <input
+                        name='un'
                         value={username}
                         onChange={(event) => {
                             setUsername(event.target.value)
@@ -46,12 +64,13 @@ function SignUpForm(props) {
                 <label>
                     Password: {" "}
                     <input
+                        name='pw'
                         type='password'
                         value={password}
                         onChange={(event) => {
                             setPassword(event.target.value)
                         }} />
-                </label><br/>
+                </label><br />
                 <button>Submit</button>
             </form>
         </>
